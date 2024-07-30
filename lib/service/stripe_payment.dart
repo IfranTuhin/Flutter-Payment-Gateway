@@ -29,7 +29,7 @@ class StripePayment {
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntent!['client_secret'],
-          merchantDisplayName: 'Tuhin',
+          merchantDisplayName: 'Tuhin', // TODO: Change this for original client merchant name
           googlePay: gPay,
         ),
       );
@@ -45,11 +45,11 @@ class StripePayment {
   // Stripe display payment sheet
   void displayPaymentSheet(packageId, finalPrice) async {
     try {
-      int uId = 1;
+      int uId = 1; // TODO: Change original user id
 
       await Stripe.instance.presentPaymentSheet();
 
-      var url = Uri.parse("https://main.assalam.app/api/directPayment/$uId/$packageId/$finalPrice");
+      var url = Uri.parse("https://main.assalam.app/api/directPayment/$uId/$packageId/$finalPrice"); // TODO: Change original payment api
       var response = await http.post(url);
 
       if (response.statusCode == 200) {
@@ -59,7 +59,7 @@ class StripePayment {
 
          //  Get.off(BottomNaveBarPage());
           Fluttertoast.showToast(
-            msg: 'Now you are Subscribe $packageId ',
+            msg: 'Payment Successfull',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 3,
@@ -92,15 +92,14 @@ class StripePayment {
     try {
       // Body
       Map<String, dynamic> body = {
-        'amount': calculateStripeAmount(finalPrice),
+        'amount': calculateStripeAmount(finalPrice), // TODO: Change original price
         'currency': 'USD',
       };
       // Url
       String url = 'https://api.stripe.com/v1/payment_intents';
 
       var response = await http.post(Uri.parse(url), body: body, headers: {
-        // 'Authorization': 'Bearer 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',
-        'Authorization': 'Bearer sk_test_51OtkZLP6GxdPVDvjHtsAzp3i4ZnkeUnltfhJYOKvsPXpaY6MZKn0LjZiYFvfZKzfRVOpSFh4aGpXkU4Pw62VjLYJ00M2qCElSw',
+        'Authorization': 'Bearer sk_test_51OtkZLP6GxdPVDvjHtsAzp3i4ZnkeUnltfhJYOKvsPXpaY6MZKn0LjZiYFvfZKzfRVOpSFh4aGpXkU4Pw62VjLYJ00M2qCElSw', // TODO: Need Change when app live
         'Content-Type': 'application/x-www-form-urlencoded',
       });
 
